@@ -1,14 +1,30 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../interfaces/user';
 
 @Component({
   tag: 'app-home',
   styleUrl: 'app-home.css',
 })
 export class AppHome {
+
+  @Prop() user: User;
+
   render() {
     return [
       <ion-header>
         <ion-toolbar color="primary">
+          <ion-buttons slot="primary">
+            <ion-button onClick={() => AuthService.logout()}>
+              <ion-icon name="log-out-outline"></ion-icon>
+            </ion-button>
+            <ion-button onClick={() => AuthService.login()}>
+              <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          {this.user &&
+            <ion-avatar slot="primary"><ion-img src={this.user.photoURL}></ion-img></ion-avatar>
+          }
           <ion-title>Home</ion-title>
         </ion-toolbar>
       </ion-header>,
@@ -22,7 +38,7 @@ export class AppHome {
         <ion-button href="/profile/ionic" expand="block">
           Profile page
         </ion-button>
-      </ion-content>,
+      </ion-content>
     ];
   }
 }

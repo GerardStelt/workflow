@@ -5,8 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { User } from "./interfaces/user";
 export namespace Components {
     interface AppHome {
+        "user": User;
     }
     interface AppProfile {
         "name": string;
@@ -41,6 +43,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AppHome {
+        "user"?: User;
     }
     interface AppProfile {
         "name"?: string;
