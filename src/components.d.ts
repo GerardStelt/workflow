@@ -12,6 +12,7 @@ export namespace Components {
     }
     interface AppProfile {
         "name": string;
+        "user": any;
     }
     interface AppRoot {
     }
@@ -47,6 +48,7 @@ declare namespace LocalJSX {
     }
     interface AppProfile {
         "name"?: string;
+        "user"?: any;
     }
     interface AppRoot {
     }

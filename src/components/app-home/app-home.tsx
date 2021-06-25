@@ -15,10 +15,10 @@ export class AppHome {
       <ion-header>
         <ion-toolbar color="primary">
           <ion-buttons slot="primary">
-            <ion-button onClick={() => AuthService.logout()}>
+            <ion-button onClick={() => AuthService.signout()}>
               <ion-icon name="log-out-outline"></ion-icon>
             </ion-button>
-            <ion-button onClick={() => AuthService.login()}>
+            <ion-button onClick={() => AuthService.signin()}>
               <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
             </ion-button>
           </ion-buttons>

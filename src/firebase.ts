@@ -45,7 +45,7 @@ const ui = new firebaseui.auth.AuthUI(firebase.auth());
 // Specify the FirebaseUI configuration (providers supported and UI customizations as well as success callbacks, etc).
 const uiConfig = {
     callbacks: {
-        signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+        signInSuccessWithAuthResult: function () {
             // User successfully signed in.
             // Return type determines whether we continue the redirect automatically
             // or whether we leave that to developer to handle.
@@ -57,7 +57,7 @@ const uiConfig = {
             document.getElementById('loader').style.display = 'none';
         }
     },
-    // signInFlow: 'popup',
+    signInFlow: 'popup',
     // signInSuccessUrl: '/',
     signInOptions: [
         {
@@ -69,13 +69,13 @@ const uiConfig = {
     // Other config options...
 }
 
-export const uiStart = (finish: boolean = false) => {
+export const uiStart = (isRedirect: boolean = false) => {
     // This is only relevant for single page apps or apps where the sign-in UI is rendered conditionally (e.g. button click)
     // When redirecting back from Identity Providers like Google and Facebook or email link sign-in, start() method needs to be called to finish the sign-in flow. 
     // If it requires a user interaction to start the initial sign-in process, you need to check if there is a pending redirect operation going on on page load to check 
     // whether start() needs to be called.
     // To check if there is a pending redirect operation to complete a sign-in attempt, check isPendingRedirect() before deciding whether to render FirebaseUI via start().
-    if (finish && !ui.isPendingRedirect()) return;
+    if (isRedirect && !ui.isPendingRedirect()) return;
 
     ui.start('#firebaseui-auth-container', uiConfig);
 }

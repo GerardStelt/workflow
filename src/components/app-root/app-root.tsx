@@ -11,10 +11,16 @@ export class AppRoot {
 	@State() user: firebase.User;
 
 	connectedCallback() {
-		AuthService.user$.subscribe({
-			next: (user: firebase.User) => this.user = user
+		AuthService.signin(true);	// check for pending redirect
+	}
+
+	componentWillRender() {
+		// delay render until AuthService finished to prevent route guards from redirecting
+		return new Promise(resolve => {
+			AuthService.user$.subscribe({
+				next: (user: firebase.User) => resolve(this.user = user)
+			});
 		});
-		AuthService.finishLogin();
 	}
 
 	render() {
@@ -22,11 +28,8 @@ export class AppRoot {
 			<ion-app>
 				<ion-router useHash={false}>
 					<ion-route url="/" component="app-home" componentProps={{ user: this.user }} />
-					<ion-route url="/profile/:name" component="app-profile" componentProps={{ user: this.user }} beforeEnter={() => !!this.user} />
-
-					{/* redirects / guards */}
-					{/* {!this.user && <ion-route-redirect from="/profile/*" to="/" />} */}
-					{/* <ion-route url="/profile/:name" component="app-profile" componentProps={{user: this.user}}/> */}
+					{!this.user && <ion-route-redirect from="/profile/*" to="/" />}
+					<ion-route url="/profile/:name" component="app-profile" componentProps={{ user: this.user }} />
 				</ion-router>
 				<ion-nav />
 			</ion-app>
