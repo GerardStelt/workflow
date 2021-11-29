@@ -2,15 +2,17 @@ import firebase from 'firebase/app';
 import { auth, uiStart, firestore } from '../firebase';
 import { Observable } from '../helpers/utils';
 
-export class AuthServiceController {
+export class AuthController {
     public user$: Observable<firebase.User>;
 
     constructor() {
         this.user$ = new Observable(observer => {
-            firebase.auth().onAuthStateChanged(user => {
-                observer.next(user)
+            auth.onAuthStateChanged(user => {
+                console.log('User', user);
+
+                observer.next(user);
                 if (!user) return;
-                
+
                 const userRef = firestore.doc(`users/${user.uid}`);
                 userRef.set({
                     uid: user.uid,
@@ -34,6 +36,10 @@ export class AuthServiceController {
         return auth.signOut();
     }
 
+    public async signInAnonymously() {
+        return await auth.signInAnonymously();
+    }
+
 }
 
-export const AuthService = new AuthServiceController();
+export const AuthService = new AuthController();

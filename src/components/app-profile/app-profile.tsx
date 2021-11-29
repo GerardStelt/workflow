@@ -24,8 +24,8 @@ export class AppProfile {
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
             <ion-back-button defaultHref="/" />
-            <ion-button onClick={() => AuthService.signin()}>
-              <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
+            <ion-button onClick={() => AuthService.signout()}>
+              <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
             </ion-button>
           </ion-buttons>
           {this.user &&

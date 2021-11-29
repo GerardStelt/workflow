@@ -16,7 +16,8 @@
   },
   "devDependencies": {
     "@ionic/core": "^5.6.5",
-    "@stencil/core": "2.4.0"
+    "@stencil/core": "2.4.0",
+    "eslint-plugin-import": "^2.23.4"
   },
   "dependencies": {
     "firebase": "^8.4.2",

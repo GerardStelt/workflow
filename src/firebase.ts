@@ -64,8 +64,14 @@ const uiConfig = {
             provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
             signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
         },
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID
+        {
+            provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            // clientId: '237224009233-umtsglvmqmnkjmbdmahsobrr3g136me4.apps.googleusercontent.com'
+        }
+        
     ],
+    // Required to enable one-tap sign-up credential helper.
+    // credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO
     // Other config options...
 }
 

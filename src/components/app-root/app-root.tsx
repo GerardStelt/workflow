@@ -1,6 +1,6 @@
 import { Component, h, State } from '@stencil/core';
-import { AuthService } from '../../services/auth.service';
 import firebase from 'firebase/app';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
 	tag: 'app-root',
@@ -17,9 +17,10 @@ export class AppRoot {
 	componentWillRender() {
 		// delay render until AuthService finished to prevent route guards from redirecting
 		return new Promise(resolve => {
-			AuthService.user$.subscribe({
-				next: (user: firebase.User) => resolve(this.user = user)
-			});
+			firebase.auth().onAuthStateChanged(user => resolve(this.user = user));
+			// AuthService.user$.subscribe({
+			// 	next: (user: firebase.User) => {console.log('User', user); resolve(this.user = user)}
+			// });
 		});
 	}
 

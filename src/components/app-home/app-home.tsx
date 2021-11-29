@@ -2,6 +2,9 @@ import { Component, h, Prop } from '@stencil/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/user';
 
+import { firestore } from '../../firebase';
+
+
 @Component({
   tag: 'app-home',
   styleUrl: 'app-home.css',
@@ -15,12 +18,14 @@ export class AppHome {
       <ion-header>
         <ion-toolbar color="primary">
           <ion-buttons slot="primary">
-            <ion-button onClick={() => AuthService.signout()}>
-              <ion-icon name="log-out-outline"></ion-icon>
-            </ion-button>
-            <ion-button onClick={() => AuthService.signin()}>
-              <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
-            </ion-button>
+            {this.user && <ion-button onClick={() => AuthService.signout()}>
+              Signout
+              <ion-icon slot="end" name="log-out-outline"></ion-icon>
+            </ion-button>}
+            {!this.user && <ion-button onClick={() => AuthService.signInAnonymously().then(data => console.log('data', data))}>
+              Signin
+              <ion-icon slot="end" name="log-in-outline"></ion-icon>
+            </ion-button>}
           </ion-buttons>
           {this.user &&
             <ion-avatar slot="primary"><ion-img src={this.user.photoURL}></ion-img></ion-avatar>
@@ -37,6 +42,15 @@ export class AppHome {
 
         <ion-button href="/profile/ionic" expand="block">
           Profile page
+        </ion-button>
+
+        <ion-button onClick={async () => {
+          await firestore.collection('tickets').add({
+            description: 'Hello again',
+            labels: ['buggy', 'features']
+          });
+        }}>
+          Store ticket
         </ion-button>
       </ion-content>
     ];
